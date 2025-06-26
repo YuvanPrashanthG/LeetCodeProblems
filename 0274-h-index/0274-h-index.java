@@ -1,15 +1,19 @@
 class Solution {
     public int hIndex(int[] citations) {
-        Arrays.sort(citations); // Sort in ascending order
-        int n = citations.length;
-        
-        for (int i = 0; i < n; i++) {
-            int h = n - i; // Number of papers with citations >= citations[i]
-            if (citations[i] >= h) {
-                return h;
-            }
+        int arr[] = new int[citations.length+1];
+        for (int citation : citations) {
+            arr[Math.min(citation, citations.length)]++;
         }
-        
+        int cur = 0;      
+        for(int i = citations.length;i>=0;i--)
+        {
+            cur += arr[i];
+            if (i <= cur)
+            {
+                return i;
+            }
+
+        }
         return 0; 
     }
 }
