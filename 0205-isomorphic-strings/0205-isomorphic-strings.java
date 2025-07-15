@@ -1,35 +1,27 @@
 class Solution {
     public boolean isIsomorphic(String s, String t) {
-       
-        if (s.length()<=1)
-        {
-            return true;
-        }
-        HashMap<Character,Character> hm = new HashMap<>();
-        HashSet<Character> hs = new HashSet<Character>();
-        char arr1[] = s.toCharArray();
-        char arr2[] = t.toCharArray();
-        hm.put(arr1[0],arr2[0]);
-        hs.add(arr2[0]);
-        for(int i =1 ;i<s.length();i++)
-        {
-            if(hm.containsKey(arr1[i]))
-            {
-                if(hm.get(arr1[i])!=arr2[i])
-                {
+       if (s.length() != t.length()) return false;
+
+        HashMap<Character, Character> map = new HashMap<>();
+        HashSet<Character> mappedValues = new HashSet<>();
+
+        for (int i = 0; i < s.length(); i++) {
+            char c1 = s.charAt(i);
+            char c2 = t.charAt(i);
+
+            if (map.containsKey(c1)) {
+                if (map.get(c1) != c2) {
                     return false;
                 }
-            }
-            else
-            {
-                if(hs.contains(arr2[i]))
-                {
-                    return false;
+            } else {
+                if (mappedValues.contains(c2)) {
+                    return false; // one-to-one violation
                 }
-                hm.put(arr1[i],arr2[i]);
-                hs.add(arr2[i]);
+                map.put(c1, c2);
+                mappedValues.add(c2);
             }
         }
+
         return true;
     }
 }
